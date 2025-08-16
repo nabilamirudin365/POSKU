@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POSKU.Core", "POSKU.Core\POSKU.Core.csproj", "{798C9A17-43CC-405E-8104-4301B3D17D54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POSKU.Data", "POSKU.Data\POSKU.Data.csproj", "{3ACDC54B-59E5-4FB5-8F27-C123B78EE12F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{798C9A17-43CC-405E-8104-4301B3D17D54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{798C9A17-43CC-405E-8104-4301B3D17D54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{798C9A17-43CC-405E-8104-4301B3D17D54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{798C9A17-43CC-405E-8104-4301B3D17D54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3ACDC54B-59E5-4FB5-8F27-C123B78EE12F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3ACDC54B-59E5-4FB5-8F27-C123B78EE12F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3ACDC54B-59E5-4FB5-8F27-C123B78EE12F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3ACDC54B-59E5-4FB5-8F27-C123B78EE12F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
