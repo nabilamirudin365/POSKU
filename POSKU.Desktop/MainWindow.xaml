@@ -26,12 +26,16 @@
 
             <StackPanel Grid.Column="2" Margin="8,0,8,0">
                 <TextBlock Text="Harga" Margin="0,0,0,4"/>
-                <TextBox Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}"
+                            PreviewTextInput="Numeric_PreviewTextInput"
+                            PreviewExecuted="TextBox_PreviewExecuted"/>
             </StackPanel>
 
             <StackPanel Grid.Column="3" Margin="8,0,8,0">
                 <TextBlock Text="Stok" Margin="0,0,0,4"/>
-                <TextBox Text="{Binding Stock, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Text="{Binding Stock, UpdateSourceTrigger=PropertyChanged}"
+                        PreviewTextInput="Integer_PreviewTextInput"
+                        PreviewExecuted="TextBox_PreviewExecuted"/>
             </StackPanel>
 
             <Button Grid.Column="4" Content="Tambah" Padding="16,6" Margin="12,18,0,0"
@@ -39,7 +43,7 @@
         </Grid>
 
         <!-- Tabel produk -->
-        <DataGrid ItemsSource="{Binding Products}" AutoGenerateColumns="False" CanUserAddRows="False">
+        <DataGrid ItemsSource="{Binding Products}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Sku}"   Header="SKU"   Width="*" />
                 <DataGridTextColumn Binding="{Binding Name}"  Header="Nama"  Width="2*" />
