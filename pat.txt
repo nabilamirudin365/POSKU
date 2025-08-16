@@ -1,0 +1,3 @@
+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
+dotnet build
+dotnet run --project POSKU.Desktop

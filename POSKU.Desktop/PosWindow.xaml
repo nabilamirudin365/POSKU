@@ -1,57 +1,113 @@
 <Window x:Class="POSKU.Desktop.PosWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="POS - Kasir" Height="600" Width="900" WindowStartupLocation="CenterScreen">
-  <DockPanel Margin="12">
+        Title="POS - Kasir"
+        Height="600"
+        Width="900"
+        WindowStartupLocation="CenterScreen">
+    <DockPanel Margin="12" LastChildFill="True">
 
-    <!-- Entry SKU/Barcode -->
-    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,10">
-      <TextBox Width="260" Margin="0,0,8,0"
-               x:Name="EntryBox"
-               ToolTip="Scan / ketik SKU atau Barcode lalu tekan Enter"
-               Text="{Binding Entry, UpdateSourceTrigger=PropertyChanged}"
-               KeyDown="EntryBox_KeyDown"/>
-      <Button Content="Tambah (Enter)" Padding="16,6"
-              Command="{Binding AddByEntryCommand}"/>
-      <Button Content="Clear Cart" Margin="8,0,0,0" Padding="16,6"
-              Command="{Binding ClearCartCommand}"/>
-    </StackPanel>
+        <!-- Entry SKU -->
+        <StackPanel DockPanel.Dock="Top"
+                    Orientation="Horizontal"
+                    Margin="0,0,0,10">
+            <TextBox Width="260"
+                     Margin="0,0,8,0"
+                     x:Name="EntryBox"
+                     ToolTip="Ketik SKU lalu tekan Enter"
+                     Text="{Binding Entry, UpdateSourceTrigger=PropertyChanged}"
+                     KeyDown="EntryBox_KeyDown"/>
+            <Button Content="Tambah (Enter)"
+                    Padding="16,6"
+                    Command="{Binding AddByEntryCommand}"/>
+            <Button Content="Clear Cart"
+                    Margin="8,0,0,0"
+                    Padding="16,6"
+                    Command="{Binding ClearCartCommand}"/>
+        </StackPanel>
 
-    <!-- Keranjang -->
-    <DataGrid ItemsSource="{Binding Cart}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True">
-      <DataGrid.Columns>
-        <DataGridTextColumn Header="SKU"    Binding="{Binding Sku}"    Width="*" />
-        <DataGridTextColumn Header="Nama"   Binding="{Binding Name}"   Width="2*" />
-        <DataGridTextColumn Header="Harga"  Binding="{Binding Price}"  Width="*" />
-        <DataGridTextColumn Header="Qty"    Binding="{Binding Qty}"    Width="*" />
-        <DataGridTextColumn Header="Subtotal" Binding="{Binding LineTotal}" Width="*" />
-        <DataGridTemplateColumn Header="Aksi" Width="180">
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Content="+"  Width="30" Margin="2"
-                        Command="{Binding DataContext.IncQtyCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                        CommandParameter="{Binding}"/>
-                <Button Content="−"  Width="30" Margin="2"
-                        Command="{Binding DataContext.DecQtyCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                        CommandParameter="{Binding}"/>
-                <Button Content="Hapus" Margin="2"
-                        Command="{Binding DataContext.RemoveLineCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                        CommandParameter="{Binding}"/>
-              </StackPanel>
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
-      </DataGrid.Columns>
-    </DataGrid>
+        <!-- Total & Bayar (letakkan SEBELUM DataGrid agar benar-benar di bawah) -->
+        <StackPanel DockPanel.Dock="Bottom"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0,10,0,0">
+            <TextBlock Text="Subtotal: "
+                       FontSize="16"
+                       Margin="0,0,6,0"/>
+            <TextBlock Text="{Binding Subtotal, StringFormat=N0}"
+                       FontWeight="Bold"
+                       FontSize="16"/>
 
-    <!-- Total -->
-    <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
-      <TextBlock Text="Subtotal: " FontSize="18" Margin="0,0,6,0"/>
-      <TextBlock Text="{Binding Subtotal}" FontWeight="Bold" FontSize="18"/>
-      <TextBlock Text="    Grand Total: " FontSize="18" Margin="18,0,6,0"/>
-      <TextBlock Text="{Binding GrandTotal}" FontWeight="Bold" FontSize="18"/>
-    </StackPanel>
+            <TextBlock Text="    Grand Total: "
+                       FontSize="16"
+                       Margin="18,0,6,0"/>
+            <TextBlock Text="{Binding GrandTotal, StringFormat=N0}"
+                       FontWeight="Bold"
+                       FontSize="16"/>
 
-  </DockPanel>
+            <TextBlock Text="    Dibayar: "
+                       FontSize="16"
+                       Margin="18,0,6,0"/>
+            <TextBox Width="120"
+                     Text="{Binding Paid, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <TextBlock Text="    Kembali: "
+                       FontSize="16"
+                       Margin="18,0,6,0"/>
+            <TextBlock Text="{Binding Change, StringFormat=N0}"
+                       FontWeight="Bold"
+                       FontSize="16"/>
+
+            <Button Content="Bayar / Posting"
+                    Margin="18,0,0,0"
+                    Padding="18,8"
+                    Command="{Binding PostSaleCommand}"/>
+        </StackPanel>
+
+        <!-- Keranjang -->
+        <DataGrid ItemsSource="{Binding Cart}"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="SKU"
+                                    Binding="{Binding Sku}"
+                                    Width="*"/>
+                <DataGridTextColumn Header="Nama"
+                                    Binding="{Binding Name}"
+                                    Width="2*"/>
+                <DataGridTextColumn Header="Harga"
+                                    Binding="{Binding Price}"
+                                    Width="*"/>
+                <DataGridTextColumn Header="Qty"
+                                    Binding="{Binding Qty}"
+                                    Width="*"/>
+                <!-- Subtotal dari LineTotal (sudah dihitung di VM),
+                     kalau kamu mengikuti saran tanpa LineTotal, ubah sesuai converter/template -->
+                <DataGridTextColumn Header="Subtotal"
+                                    Binding="{Binding LineTotal}"
+                                    Width="*"/>
+
+                <DataGridTemplateColumn Header="Aksi" Width="180">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Content="+" Width="30" Margin="2"
+                                        Command="{Binding DataContext.IncQtyCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                        CommandParameter="{Binding}"/>
+                                <Button Content="−" Width="30" Margin="2"
+                                        Command="{Binding DataContext.DecQtyCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                        CommandParameter="{Binding}"/>
+                                <Button Content="Hapus" Margin="2"
+                                        Command="{Binding DataContext.RemoveLineCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                        CommandParameter="{Binding}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </DockPanel>
 </Window>
