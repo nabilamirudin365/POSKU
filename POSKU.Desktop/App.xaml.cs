@@ -6,6 +6,9 @@ using System.Windows.Threading;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using POSKU.Data;
+using POSKU.Core;
+using System.Linq;
+
 
 namespace POSKU.Desktop
 {
@@ -36,7 +39,7 @@ namespace POSKU.Desktop
             try
             {
                 // lokasi DB
-                var dbDir  = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "POSKU");
+                var dbDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "POSKU");
                 Directory.CreateDirectory(dbDir);
                 var dbPath = Path.Combine(dbDir, "pos.db");
 
@@ -54,6 +57,16 @@ namespace POSKU.Desktop
                     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                     //db.Database.EnsureCreated();
                     db.Database.Migrate();
+                    if (!db.Products.Any())
+                    {
+                        db.Products.AddRange(
+                            new Product { Sku = "ABC001", Name = "Teh Botol 350ml", Price = 4500, Stock = 24 },
+                            new Product { Sku = "ABC002", Name = "Roti Coklat", Price = 6500.50m, Stock = 10 },
+                            new Product { Sku = "XYZ001", Name = "Gula 1kg", Price = 16000, Stock = 5 }
+                        );
+                        db.SaveChanges();
+                    }
+
                 }
 
                 var main = Services.GetRequiredService<MainWindow>();
