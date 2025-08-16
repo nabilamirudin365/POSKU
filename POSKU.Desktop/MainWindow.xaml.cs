@@ -1,6 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace POSKU.Desktop
 {
@@ -51,5 +52,14 @@ namespace POSKU.Desktop
                 }
             }
         }
+
+        private void OpenPos_Click(object sender, RoutedEventArgs e)
+        {
+            var pos = App.Services.GetRequiredService<PosWindow>();
+            pos.Owner = this;
+            pos.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            pos.Show();
+        }
+
     }
 }

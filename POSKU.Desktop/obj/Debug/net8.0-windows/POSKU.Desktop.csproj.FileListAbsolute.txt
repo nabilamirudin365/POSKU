@@ -154,3 +154,6 @@ C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\ru\Microsoft.CodeAnalysis.Worksp
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\POSKU\POSKU.Desktop\obj\Debug\net8.0-windows\PosWindow.baml
+C:\POSKU\POSKU.Desktop\obj\Debug\net8.0-windows\PosWindow.g.cs
+C:\POSKU\POSKU.Desktop\obj\Debug\net8.0-windows\POSKU.Desktop.sourcelink.json

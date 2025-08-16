@@ -4,6 +4,11 @@
         Title="POSKU - Produk" Height="520" Width="880" WindowStartupLocation="CenterScreen">
     <DockPanel Margin="12">
 
+        <!-- Toolbar -->
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,10">
+            <Button Content="Buka Layar POS" Padding="12,6" Click="OpenPos_Click"/>
+        </StackPanel>
+
         <!-- Form input -->
         <Grid DockPanel.Dock="Top" Margin="0,0,0,10">
             <Grid.ColumnDefinitions>
@@ -27,15 +32,15 @@
             <StackPanel Grid.Column="2" Margin="8,0,8,0">
                 <TextBlock Text="Harga" Margin="0,0,0,4"/>
                 <TextBox Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}"
-                            PreviewTextInput="Numeric_PreviewTextInput"
-                            PreviewExecuted="TextBox_PreviewExecuted"/>
+                         PreviewTextInput="Numeric_PreviewTextInput"
+                         CommandManager.PreviewExecuted="TextBox_PreviewExecuted"/>
             </StackPanel>
 
             <StackPanel Grid.Column="3" Margin="8,0,8,0">
                 <TextBlock Text="Stok" Margin="0,0,0,4"/>
                 <TextBox Text="{Binding Stock, UpdateSourceTrigger=PropertyChanged}"
-                        PreviewTextInput="Integer_PreviewTextInput"
-                        PreviewExecuted="TextBox_PreviewExecuted"/>
+                         PreviewTextInput="Integer_PreviewTextInput"
+                         CommandManager.PreviewExecuted="TextBox_PreviewExecuted"/>
             </StackPanel>
 
             <Button Grid.Column="4" Content="Tambah" Padding="16,6" Margin="12,18,0,0"
@@ -43,7 +48,8 @@
         </Grid>
 
         <!-- Tabel produk -->
-        <DataGrid ItemsSource="{Binding Products}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True">
+        <DataGrid ItemsSource="{Binding Products}" AutoGenerateColumns="False"
+                  CanUserAddRows="False" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Sku}"   Header="SKU"   Width="*" />
                 <DataGridTextColumn Binding="{Binding Name}"  Header="Nama"  Width="2*" />

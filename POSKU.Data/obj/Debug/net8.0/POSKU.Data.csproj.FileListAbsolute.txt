@@ -15,3 +15,4 @@ C:\POSKU\POSKU.Data\obj\Debug\net8.0\refint\POSKU.Data.dll
 C:\POSKU\POSKU.Data\obj\Debug\net8.0\POSKU.Data.pdb
 C:\POSKU\POSKU.Data\obj\Debug\net8.0\POSKU.Data.genruntimeconfig.cache
 C:\POSKU\POSKU.Data\obj\Debug\net8.0\ref\POSKU.Data.dll
+C:\POSKU\POSKU.Data\obj\Debug\net8.0\POSKU.Data.sourcelink.json

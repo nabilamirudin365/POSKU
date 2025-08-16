@@ -49,6 +49,8 @@ namespace POSKU.Desktop
 
                 sc.AddTransient<MainViewModel>();
                 sc.AddSingleton<MainWindow>(sp => new MainWindow(sp.GetRequiredService<MainViewModel>()));
+                sc.AddTransient<PosViewModel>();
+                sc.AddTransient<PosWindow>(sp => new PosWindow(sp.GetRequiredService<PosViewModel>()));
 
                 Services = sc.BuildServiceProvider();
 
