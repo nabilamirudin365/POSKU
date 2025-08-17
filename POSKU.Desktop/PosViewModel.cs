@@ -1,4 +1,7 @@
+using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -15,26 +18,73 @@ public partial class PosViewModel : ObservableObject
 
     public ObservableCollection<CartLineVM> Cart { get; } = new();
 
+    // Entry & totals
     [ObservableProperty] private string entry = "";
-    [ObservableProperty] private decimal subtotal;
+    [ObservableProperty] private decimal subtotal;        // setelah dikurangi diskon item, sebelum diskon nota
     [ObservableProperty] private decimal grandTotal;
 
-    // >>> R1.M4: pembayaran
+    // Pembayaran
     [ObservableProperty] private decimal paid;
     [ObservableProperty] private decimal change;
+
+    // Breakdown R1.M5
+    [ObservableProperty] private decimal subtotalLines;   // Σ (Qty * Price) seluruh baris
+    [ObservableProperty] private decimal discountItems;   // Σ (Discount per baris)
+    [ObservableProperty] private decimal discountNote;    // Diskon nota (Rp)
 
     public PosViewModel(AppDbContext db)
     {
         _db = db;
+
+        // Hook perubahan item cart agar total selalu ter-update
+        Cart.CollectionChanged += Cart_CollectionChanged;
+
         RecalcTotals();
     }
 
+    // Reaktif: jika Paid berubah, hitung Change
     partial void OnPaidChanged(decimal value) => Change = Paid - GrandTotal;
+
+    // Reaktif: jika Diskon Nota berubah, hitung ulang total
+    partial void OnDiscountNoteChanged(decimal value) => RecalcTotals();
+
+    private void Cart_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        if (e.OldItems != null)
+        {
+            foreach (CartLineVM old in e.OldItems)
+                old.PropertyChanged -= CartLine_PropertyChanged;
+        }
+        if (e.NewItems != null)
+        {
+            foreach (CartLineVM add in e.NewItems)
+                add.PropertyChanged += CartLine_PropertyChanged;
+        }
+        RecalcTotals();
+    }
+
+    private void CartLine_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName is nameof(CartLineVM.Qty)
+            or nameof(CartLineVM.Price)
+            or nameof(CartLineVM.Discount))
+        {
+            RecalcTotals();
+        }
+    }
 
     private void RecalcTotals()
     {
-        Subtotal = Cart.Sum(x => x.LineTotal);
-        GrandTotal = Subtotal;   // belum diskon/ppn
+        SubtotalLines = Cart.Sum(x => x.Qty * x.Price);
+        DiscountItems = Cart.Sum(x => x.Discount);
+
+        var sub = SubtotalLines - DiscountItems;
+        if (sub < 0) sub = 0;
+
+        Subtotal   = sub;                    // sebelum diskon nota
+        GrandTotal = Subtotal - DiscountNote;
+        if (GrandTotal < 0) GrandTotal = 0;
+
         Change = Paid - GrandTotal;
     }
 
@@ -43,7 +93,7 @@ public partial class PosViewModel : ObservableObject
         if (string.IsNullOrWhiteSpace(key)) return null;
         key = key.Trim();
 
-        // Saat barcode di-skip, hanya SKU
+        // Saat barcode di-skip, cari hanya SKU
         var prod = _db.Products.AsNoTracking().FirstOrDefault(p => p.Sku == key);
 
         if (prod is { IsActive: false }) return null;
@@ -56,23 +106,22 @@ public partial class PosViewModel : ObservableObject
         if (exists != null)
         {
             exists.Qty += qty;
-            exists.Recalc();
         }
         else
         {
-            var line = new CartLineVM
+            Cart.Add(new CartLineVM
             {
                 ProductId = p.Id,
                 Sku = p.Sku,
                 Name = p.Name,
                 Price = p.Price,
                 Qty = qty
-            };
-            line.Recalc();
-            Cart.Add(line);
+            });
         }
         RecalcTotals();
     }
+
+    // ===== Commands =====
 
     [RelayCommand]
     private void AddByEntry()
@@ -83,7 +132,7 @@ public partial class PosViewModel : ObservableObject
         var p = FindProduct(key);
         if (p == null)
         {
-            System.Windows.MessageBox.Show("Produk tidak ditemukan (cek SKU).");
+            MessageBox.Show("Produk tidak ditemukan (cek SKU).");
             return;
         }
 
@@ -92,35 +141,50 @@ public partial class PosViewModel : ObservableObject
     }
 
     [RelayCommand] private void ClearCart() { Cart.Clear(); RecalcTotals(); }
-    [RelayCommand] private void RemoveLine(CartLineVM? line) { if (line==null) return; Cart.Remove(line); RecalcTotals(); }
-    [RelayCommand] private void IncQty(CartLineVM? line) { if (line==null) return; line.Qty += 1; line.Recalc(); RecalcTotals(); }
-    [RelayCommand] private void DecQty(CartLineVM? line)
+
+    [RelayCommand]
+    private void RemoveLine(CartLineVM? line)
     {
         if (line == null) return;
-        if (line.Qty > 1) { line.Qty -= 1; line.Recalc(); }
-        else { Cart.Remove(line); }
+        Cart.Remove(line);
         RecalcTotals();
     }
 
-    // ===== R1.M4: Posting =====
+    [RelayCommand]
+    private void IncQty(CartLineVM? line)
+    {
+        if (line == null) return;
+        line.Qty += 1;
+        // RecalcTotals akan terpanggil via PropertyChanged hook
+    }
+
+    [RelayCommand]
+    private void DecQty(CartLineVM? line)
+    {
+        if (line == null) return;
+        if (line.Qty > 1) line.Qty -= 1;
+        else Cart.Remove(line);
+        // RecalcTotals akan terpanggil via hook / remove
+    }
+
+    // ===== R1.M4/M5: Posting =====
 
     [RelayCommand]
     private void PostSale()
     {
         if (Cart.Count == 0)
         {
-            System.Windows.MessageBox.Show("Keranjang kosong.");
+            MessageBox.Show("Keranjang kosong.");
             return;
         }
 
         if (Paid < GrandTotal)
         {
-            var ok = System.Windows.MessageBox.Show("Pembayaran kurang dari total. Lanjutkan?", "Konfirmasi", System.Windows.MessageBoxButton.YesNo);
-            if (ok != System.Windows.MessageBoxResult.Yes) return;
+            var ok = MessageBox.Show("Pembayaran kurang dari total. Lanjutkan?", "Konfirmasi", MessageBoxButton.YesNo);
+            if (ok != MessageBoxResult.Yes) return;
         }
 
         using var trx = _db.Database.BeginTransaction();
-
         try
         {
             var number = GenerateDocNumber(); // POS-YYYYMMDD-####
@@ -129,8 +193,8 @@ public partial class PosViewModel : ObservableObject
             {
                 Number = number,
                 Date = DateTime.Now,
-                Subtotal = Subtotal,
-                DiscountTotal = 0m,
+                Subtotal = SubtotalLines,                       // sebelum diskon apapun
+                DiscountTotal = DiscountItems + DiscountNote,   // total diskon (item + nota)
                 TaxTotal = 0m,
                 GrandTotal = GrandTotal,
                 PaymentMethod = PaymentMethod.Cash,
@@ -141,22 +205,21 @@ public partial class PosViewModel : ObservableObject
 
             foreach (var line in Cart)
             {
-                var item = new SalesItem
+                header.Items.Add(new SalesItem
                 {
                     ProductId = line.ProductId,
                     Qty = line.Qty,
                     Price = line.Price,
-                    Discount = 0m,
+                    Discount = line.Discount,                   // simpan diskon per item
                     Tax = 0m,
-                    LineTotal = line.LineTotal,
-                    WarehouseId = 1 // asumsi gudang default MAIN (Id=1 dari seeding)
-                };
-                header.Items.Add(item);
+                    LineTotal = Math.Max(0, (line.Qty * line.Price) - line.Discount),
+                    WarehouseId = 1                             // asumsi gudang default MAIN Id=1
+                });
             }
 
             _db.SalesHeaders.Add(header);
 
-            // Kurangi stok & tulis ledger stok (StockTxn OUT)
+            // Kurangi stok & ledger stok (StockTxn OUT)
             foreach (var line in Cart)
             {
                 var prod = _db.Products.First(p => p.Id == line.ProductId);
@@ -169,33 +232,34 @@ public partial class PosViewModel : ObservableObject
                     ProductId = prod.Id,
                     Direction = StockDir.Out,
                     Qty = line.Qty,
-                    UnitCost = prod.Cost, // akan dipakai di R2 (HPP)
+                    UnitCost = prod.Cost,        // dipakai nanti untuk HPP
                     RefType = StockRef.Sale,
-                    RefId = header.Id, // sementara 0; akan terisi setelah SaveChanges
+                    RefId = header.Id,           // akan valid setelah SaveChanges (SQLite assign Id)
                     Note = header.Number
                 });
             }
 
             _db.SaveChanges();
 
-            // Perbarui RefId StockTxn dengan Header.Id jika perlu (opsional—di SQLite SaveChanges sudah memberi Id)
+            // (Opsional) pastikan RefId diisi bila DB driver menunda Id
             foreach (var t in _db.StockTxns.Where(t => t.RefId == null && t.RefType == StockRef.Sale && t.Note == header.Number))
                 t.RefId = header.Id;
             _db.SaveChanges();
 
             trx.Commit();
 
-            System.Windows.MessageBox.Show($"Transaksi tersimpan.\nNo: {header.Number}\nTotal: {header.GrandTotal:N0}\nKembali: {header.Change:N0}");
+            MessageBox.Show($"Transaksi tersimpan.\nNo: {header.Number}\nTotal: {header.GrandTotal:N0}\nKembali: {header.Change:N0}");
 
             // Reset layar
             Cart.Clear();
             Paid = 0;
+            DiscountNote = 0;
             RecalcTotals();
         }
         catch (Exception ex)
         {
             trx.Rollback();
-            System.Windows.MessageBox.Show("Gagal menyimpan transaksi:\n" + ex.Message, "Error");
+            MessageBox.Show("Gagal menyimpan transaksi:\n" + ex.Message, "Error");
         }
     }
 
@@ -208,6 +272,7 @@ public partial class PosViewModel : ObservableObject
     }
 }
 
+// ===== View model untuk baris keranjang =====
 public partial class CartLineVM : ObservableObject
 {
     public int ProductId { get; set; }
@@ -216,11 +281,7 @@ public partial class CartLineVM : ObservableObject
 
     [ObservableProperty] private decimal price;
     [ObservableProperty] private decimal qty = 1;
-    [ObservableProperty] private decimal lineTotal;
 
-    public void Recalc()
-    {
-        LineTotal = Qty * Price;
-        OnPropertyChanged(nameof(LineTotal));
-    }
+    // Diskon per baris (Rupiah)
+    [ObservableProperty] private decimal discount;
 }

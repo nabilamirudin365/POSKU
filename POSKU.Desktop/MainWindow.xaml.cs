@@ -61,5 +61,13 @@ namespace POSKU.Desktop
             pos.Show();
         }
 
+        private void OpenDailyReport_Click(object sender, RoutedEventArgs e)
+        {
+            var win = App.Services.GetRequiredService<ReportWindow>();
+            win.Owner = this;
+            win.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            win.ShowDialog();
+        }
+
     }
 }

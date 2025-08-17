@@ -7,6 +7,7 @@
         <!-- Toolbar -->
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,10">
             <Button Content="Buka Layar POS" Padding="12,6" Click="OpenPos_Click"/>
+            <Button Content="Laporan Harian" Padding="12,6" Margin="8,0,0,0" Click="OpenDailyReport_Click"/>
         </StackPanel>
 
         <!-- Form input -->

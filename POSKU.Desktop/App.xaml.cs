@@ -9,7 +9,6 @@ using POSKU.Data;
 using POSKU.Core;
 using System.Linq;
 
-
 namespace POSKU.Desktop
 {
     public partial class App : Application
@@ -38,10 +37,11 @@ namespace POSKU.Desktop
 
             try
             {
-                // lokasi DB
-                var dbDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "POSKU");
+                // === LOKASI DB: bin/.../Data/pos.db ===
+                var basePath = AppDomain.CurrentDomain.BaseDirectory; // contoh: ...\POSKU.Desktop\bin\Debug\net8.0-windows\
+                var dbDir    = Path.Combine(basePath, "Data");
                 Directory.CreateDirectory(dbDir);
-                var dbPath = Path.Combine(dbDir, "pos.db");
+                var dbPath   = Path.Combine(dbDir, "pos.db");
 
                 var sc = new ServiceCollection();
 
@@ -51,14 +51,17 @@ namespace POSKU.Desktop
                 sc.AddSingleton<MainWindow>(sp => new MainWindow(sp.GetRequiredService<MainViewModel>()));
                 sc.AddTransient<PosViewModel>();
                 sc.AddTransient<PosWindow>(sp => new PosWindow(sp.GetRequiredService<PosViewModel>()));
+                sc.AddTransient<ReportViewModel>();
+                sc.AddTransient<ReportWindow>(sp => new ReportWindow(sp.GetRequiredService<ReportViewModel>()));
 
                 Services = sc.BuildServiceProvider();
 
                 using (var scope = Services.CreateScope())
                 {
                     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                    //db.Database.EnsureCreated();
                     db.Database.Migrate();
+
+                    // Seed contoh produk (hanya jika kosong)
                     if (!db.Products.Any())
                     {
                         db.Products.AddRange(
@@ -68,13 +71,14 @@ namespace POSKU.Desktop
                         );
                         db.SaveChanges();
                     }
-
                 }
 
                 var main = Services.GetRequiredService<MainWindow>();
-                // penting: set MainWindow agar ShutdownMode tahu window utama
-                this.MainWindow = main;
+                this.MainWindow = main; // penting: set MainWindow agar ShutdownMode tahu window utama
                 main.Show();
+
+                // (opsional) tampilkan path DB agar mudah dicek saat dev
+                Console.WriteLine($"[POSKU] Using DB: {Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "pos.db")}");
             }
             catch (Exception exAll)
             {

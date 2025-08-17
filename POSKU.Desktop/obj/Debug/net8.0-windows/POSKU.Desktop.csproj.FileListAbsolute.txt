@@ -157,3 +157,7 @@ C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\zh-Hant\Microsoft.CodeAnalysis.W
 C:\POSKU\POSKU.Desktop\obj\Debug\net8.0-windows\PosWindow.baml
 C:\POSKU\POSKU.Desktop\obj\Debug\net8.0-windows\PosWindow.g.cs
 C:\POSKU\POSKU.Desktop\obj\Debug\net8.0-windows\POSKU.Desktop.sourcelink.json
+C:\POSKU\POSKU.Desktop\obj\Debug\net8.0-windows\ReportWindow.baml
+C:\POSKU\POSKU.Desktop\obj\Debug\net8.0-windows\ReportWindow.g.cs
+C:\POSKU\POSKU.Desktop\obj\Debug\net8.0-windows\GeneratedInternalTypeHelper.g.cs
+C:\POSKU\POSKU.Desktop\obj\Debug\net8.0-windows\POSKU.Desktop_MarkupCompile.lref
