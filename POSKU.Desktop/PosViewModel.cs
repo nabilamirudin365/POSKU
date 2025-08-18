@@ -81,7 +81,7 @@ public partial class PosViewModel : ObservableObject
         var sub = SubtotalLines - DiscountItems;
         if (sub < 0) sub = 0;
 
-        Subtotal   = sub;                    // sebelum diskon nota
+        Subtotal = sub;                    // sebelum diskon nota
         GrandTotal = Subtotal - DiscountNote;
         if (GrandTotal < 0) GrandTotal = 0;
 
@@ -183,6 +183,19 @@ public partial class PosViewModel : ObservableObject
             var ok = MessageBox.Show("Pembayaran kurang dari total. Lanjutkan?", "Konfirmasi", MessageBoxButton.YesNo);
             if (ok != MessageBoxResult.Yes) return;
         }
+        var lack = new System.Text.StringBuilder();
+        foreach (var line in Cart)
+        {
+            var prodNow = _db.Products.AsNoTracking().First(p => p.Id == line.ProductId);
+            if (prodNow.Stock < (int)line.Qty)
+                lack.AppendLine($"- {prodNow.Sku} {prodNow.Name}: sisa {prodNow.Stock}, diminta {line.Qty}");
+        }
+        if (lack.Length > 0)
+        {
+            MessageBox.Show("Stok tidak cukup:\n" + lack.ToString(), "Stock Guard");
+            return;
+        }
+
 
         using var trx = _db.Database.BeginTransaction();
         try

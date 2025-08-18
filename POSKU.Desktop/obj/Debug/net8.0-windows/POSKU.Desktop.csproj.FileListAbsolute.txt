@@ -41,10 +41,7 @@ C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\Microsoft.Extensions.Primitives.
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\SQLitePCLRaw.batteries_v2.dll
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\SQLitePCLRaw.core.dll
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\SQLitePCLRaw.provider.e_sqlite3.dll
-C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\System.Diagnostics.DiagnosticSource.dll
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\System.IO.Pipelines.dll
-C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\System.Text.Encodings.Web.dll
-C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\System.Text.Json.dll
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\runtimes\browser-wasm\nativeassets\net8.0\e_sqlite3.a
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\runtimes\linux-arm\native\libe_sqlite3.so
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\runtimes\linux-arm64\native\libe_sqlite3.so
@@ -52,7 +49,6 @@ C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\runtimes\linux-armel\native\libe
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\runtimes\linux-mips64\native\libe_sqlite3.so
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\runtimes\linux-musl-arm\native\libe_sqlite3.so
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\runtimes\linux-musl-arm64\native\libe_sqlite3.so
-C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\runtimes\linux-musl-s390x\native\libe_sqlite3.so
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\runtimes\linux-musl-x64\native\libe_sqlite3.so
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\runtimes\linux-ppc64le\native\libe_sqlite3.so
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\runtimes\linux-s390x\native\libe_sqlite3.so
@@ -66,7 +62,6 @@ C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\runtimes\win-arm\native\e_sqlite
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\runtimes\win-arm64\native\e_sqlite3.dll
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\runtimes\win-x64\native\e_sqlite3.dll
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\runtimes\win-x86\native\e_sqlite3.dll
-C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\POSKU.Core.dll
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\POSKU.Data.dll
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\POSKU.Core.pdb
@@ -75,13 +70,10 @@ C:\POSKU\POSKU.Desktop\obj\Debug\net8.0-windows\POSKU.Desktop.csproj.AssemblyRef
 C:\POSKU\POSKU.Desktop\obj\Debug\net8.0-windows\POSKU.De.5C6C678A.Up2Date
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\Humanizer.dll
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\Microsoft.Bcl.AsyncInterfaces.dll
-C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\Microsoft.Build.Locator.dll
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\Microsoft.CodeAnalysis.dll
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\Microsoft.CodeAnalysis.CSharp.dll
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\Microsoft.CodeAnalysis.Workspaces.dll
-C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
-C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\Microsoft.EntityFrameworkCore.Design.dll
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\Mono.TextTemplating.dll
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\System.Composition.AttributedModel.dll
@@ -141,19 +133,6 @@ C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\ru\Microsoft.CodeAnalysis.Worksp
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-C:\POSKU\POSKU.Desktop\bin\Debug\net8.0-windows\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\POSKU\POSKU.Desktop\obj\Debug\net8.0-windows\PosWindow.baml
 C:\POSKU\POSKU.Desktop\obj\Debug\net8.0-windows\PosWindow.g.cs
 C:\POSKU\POSKU.Desktop\obj\Debug\net8.0-windows\POSKU.Desktop.sourcelink.json
@@ -161,3 +140,5 @@ C:\POSKU\POSKU.Desktop\obj\Debug\net8.0-windows\ReportWindow.baml
 C:\POSKU\POSKU.Desktop\obj\Debug\net8.0-windows\ReportWindow.g.cs
 C:\POSKU\POSKU.Desktop\obj\Debug\net8.0-windows\GeneratedInternalTypeHelper.g.cs
 C:\POSKU\POSKU.Desktop\obj\Debug\net8.0-windows\POSKU.Desktop_MarkupCompile.lref
+C:\POSKU\POSKU.Desktop\obj\Debug\net8.0-windows\PurchaseWindow.g.cs
+C:\POSKU\POSKU.Desktop\obj\Debug\net8.0-windows\PurchaseWindow.baml

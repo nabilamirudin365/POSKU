@@ -15,7 +15,7 @@ namespace POSKU.Data.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "9.0.8");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
 
             modelBuilder.Entity("POSKU.Core.Customer", b =>
                 {
@@ -84,6 +84,72 @@ namespace POSKU.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("POSKU.Core.PurchaseHeader", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("GrandTotal")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Subtotal")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Supplier")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Number")
+                        .IsUnique();
+
+                    b.ToTable("PurchaseHeaders");
+                });
+
+            modelBuilder.Entity("POSKU.Core.PurchaseItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Cost")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("LineTotal")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PurchaseHeaderId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Qty")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("WarehouseId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("PurchaseHeaderId");
+
+                    b.ToTable("PurchaseItems");
                 });
 
             modelBuilder.Entity("POSKU.Core.SalesHeader", b =>
@@ -255,6 +321,25 @@ namespace POSKU.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("POSKU.Core.PurchaseItem", b =>
+                {
+                    b.HasOne("POSKU.Core.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("POSKU.Core.PurchaseHeader", "Header")
+                        .WithMany("Items")
+                        .HasForeignKey("PurchaseHeaderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Header");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("POSKU.Core.SalesHeader", b =>
                 {
                     b.HasOne("POSKU.Core.Customer", "Customer")
@@ -289,6 +374,11 @@ namespace POSKU.Data.Migrations
                     b.Navigation("SalesHeader");
 
                     b.Navigation("Warehouse");
+                });
+
+            modelBuilder.Entity("POSKU.Core.PurchaseHeader", b =>
+                {
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("POSKU.Core.SalesHeader", b =>

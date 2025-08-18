@@ -53,6 +53,9 @@ namespace POSKU.Desktop
                 sc.AddTransient<PosWindow>(sp => new PosWindow(sp.GetRequiredService<PosViewModel>()));
                 sc.AddTransient<ReportViewModel>();
                 sc.AddTransient<ReportWindow>(sp => new ReportWindow(sp.GetRequiredService<ReportViewModel>()));
+                sc.AddTransient<PurchaseViewModel>();
+                sc.AddTransient<PurchaseWindow>(sp => new PurchaseWindow(sp.GetRequiredService<PurchaseViewModel>()));
+
 
                 Services = sc.BuildServiceProvider();
 

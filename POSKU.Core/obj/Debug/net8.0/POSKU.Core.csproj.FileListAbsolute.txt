@@ -5,8 +5,8 @@ C:\POSKU\POSKU.Core\obj\Debug\net8.0\POSKU.Core.GeneratedMSBuildEditorConfig.edi
 C:\POSKU\POSKU.Core\obj\Debug\net8.0\POSKU.Core.AssemblyInfoInputs.cache
 C:\POSKU\POSKU.Core\obj\Debug\net8.0\POSKU.Core.AssemblyInfo.cs
 C:\POSKU\POSKU.Core\obj\Debug\net8.0\POSKU.Core.csproj.CoreCompileInputs.cache
+C:\POSKU\POSKU.Core\obj\Debug\net8.0\POSKU.Core.sourcelink.json
 C:\POSKU\POSKU.Core\obj\Debug\net8.0\POSKU.Core.dll
 C:\POSKU\POSKU.Core\obj\Debug\net8.0\refint\POSKU.Core.dll
 C:\POSKU\POSKU.Core\obj\Debug\net8.0\POSKU.Core.pdb
 C:\POSKU\POSKU.Core\obj\Debug\net8.0\ref\POSKU.Core.dll
-C:\POSKU\POSKU.Core\obj\Debug\net8.0\POSKU.Core.sourcelink.json

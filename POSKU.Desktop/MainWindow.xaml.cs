@@ -68,6 +68,13 @@ namespace POSKU.Desktop
             win.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             win.ShowDialog();
         }
+        private void OpenPurchase_Click(object sender, RoutedEventArgs e)
+        {
+            var win = App.Services.GetRequiredService<PurchaseWindow>();
+            win.Owner = this;
+            win.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            win.Show();
+        }
 
     }
 }

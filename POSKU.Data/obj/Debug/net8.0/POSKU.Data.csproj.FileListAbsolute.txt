@@ -9,10 +9,10 @@ C:\POSKU\POSKU.Data\obj\Debug\net8.0\POSKU.Data.GeneratedMSBuildEditorConfig.edi
 C:\POSKU\POSKU.Data\obj\Debug\net8.0\POSKU.Data.AssemblyInfoInputs.cache
 C:\POSKU\POSKU.Data\obj\Debug\net8.0\POSKU.Data.AssemblyInfo.cs
 C:\POSKU\POSKU.Data\obj\Debug\net8.0\POSKU.Data.csproj.CoreCompileInputs.cache
+C:\POSKU\POSKU.Data\obj\Debug\net8.0\POSKU.Data.sourcelink.json
 C:\POSKU\POSKU.Data\obj\Debug\net8.0\POSKU.Data.csproj.Up2Date
 C:\POSKU\POSKU.Data\obj\Debug\net8.0\POSKU.Data.dll
 C:\POSKU\POSKU.Data\obj\Debug\net8.0\refint\POSKU.Data.dll
 C:\POSKU\POSKU.Data\obj\Debug\net8.0\POSKU.Data.pdb
 C:\POSKU\POSKU.Data\obj\Debug\net8.0\POSKU.Data.genruntimeconfig.cache
 C:\POSKU\POSKU.Data\obj\Debug\net8.0\ref\POSKU.Data.dll
-C:\POSKU\POSKU.Data\obj\Debug\net8.0\POSKU.Data.sourcelink.json

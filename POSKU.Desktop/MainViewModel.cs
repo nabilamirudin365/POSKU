@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using POSKU.Core;
 using POSKU.Data;
 using System.Windows;
+using CommunityToolkit.Mvvm.Messaging;
 
 
 namespace POSKU.Desktop;
@@ -25,6 +26,11 @@ public partial class MainViewModel : ObservableObject
     {
         _db = db;
         Load();
+
+        WeakReferenceMessenger.Default.Register<StockChangedMessage>(this, (r, m) =>
+        {
+            RefreshSingleProduct(m.Value); // m.Value = ProductId
+        });
     }
 
     private void Load()
@@ -32,6 +38,29 @@ public partial class MainViewModel : ObservableObject
         Products.Clear();
         foreach (var p in _db.Products.AsNoTracking().OrderBy(p => p.Name))
             Products.Add(p);
+    }
+    private void RefreshSingleProduct(int productId)
+    {
+        // ambil stok terbaru dari DB
+        var updated = _db.Products.AsNoTracking().FirstOrDefault(p => p.Id == productId);
+        if (updated is null) return;
+
+        var local = Products.FirstOrDefault(p => p.Id == productId);
+        if (local is null)
+        {
+            // kalau belum ada di list, tambahkan
+            Products.Add(updated);
+            return;
+        }
+
+        // update nilai yang berubah (stok, cost, dll)
+        local.Stock = updated.Stock;
+        local.Cost  = updated.Cost;
+
+        // jika Product bukan ObservableObject, paksa refresh baris:
+        // Caranya sederhana: ganti item di koleksi (trigger UI refresh)
+        var idx = Products.IndexOf(local);
+        Products[idx] = updated;
     }
 
     [RelayCommand]

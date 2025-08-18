@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("POSKU.Data")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+33ab695972a7a608e6ebb70d5b6a4fe3c80720dd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+85f712a6a1dbbad2f869d110fbca44d9766e1298")]
 [assembly: System.Reflection.AssemblyProductAttribute("POSKU.Data")]
 [assembly: System.Reflection.AssemblyTitleAttribute("POSKU.Data")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

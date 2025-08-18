@@ -10,10 +10,10 @@ namespace POSKU.Data
     {
         public AppDbContext CreateDbContext(string[] args)
         {
-            // Samakan lokasi DB dengan runtime (%LocalAppData%\POSKU\pos.db)
-            var dbDir  = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "POSKU");
-            Directory.CreateDirectory(dbDir);
-            var dbPath = Path.Combine(dbDir, "pos.db");
+            var basePath = AppDomain.CurrentDomain.BaseDirectory;
+            var dataDir = Path.Combine(basePath, "Data");
+            Directory.CreateDirectory(dataDir);
+            var dbPath = Path.Combine(dataDir, "pos.db");
 
             var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseSqlite($"Data Source={dbPath}")
@@ -21,5 +21,6 @@ namespace POSKU.Data
 
             return new AppDbContext(options);
         }
+
     }
 }
